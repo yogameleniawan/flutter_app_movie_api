@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pemrograman_mobile_week9/pages/movie_list.dart';
 
 void main() {
   runApp(MyApp());
@@ -22,6 +23,6 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return MovieList();
   }
 }

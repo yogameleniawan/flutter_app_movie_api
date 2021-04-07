@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pemrograman_mobile_week9/helper/httpservice.dart';
+import 'package:pemrograman_mobile_week9/service/httpservice.dart';
 
 class MovieList extends StatefulWidget {
   MovieList({Key key}) : super(key: key);
