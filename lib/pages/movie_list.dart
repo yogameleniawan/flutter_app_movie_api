@@ -56,166 +56,168 @@ class _MovieListState extends State<MovieList> {
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 3,
-      child: Scaffold(
-        backgroundColor: Color(0xFF151C26),
-        appBar: AppBar(
-          backwardsCompatibility: false,
-          systemOverlayStyle:
-              SystemUiOverlayStyle(statusBarColor: Color(0xFF151C26)),
+      child: SafeArea(
+        child: Scaffold(
           backgroundColor: Color(0xFF151C26),
-          brightness: Brightness.dark,
-          title: Row(
-            children: [
-              Text(
-                "Movies",
-                style: TextStyle(color: Colors.white, fontSize: 30),
-              ),
-              Container(
-                child: Text("HD",
-                    style: TextStyle(
-                        color: Color(0xFF151C26),
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold)),
-                decoration: new BoxDecoration(
-                    borderRadius:
-                        new BorderRadius.all(new Radius.circular(5.0)),
-                    color: Colors.amber[700]),
-                padding: new EdgeInsets.all(3),
-              ),
-            ],
-          ),
-        ),
-        body: Container(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                  padding: EdgeInsets.only(left: 10, top: 10, bottom: 10),
-                  child: Text("Trending",
+          appBar: AppBar(
+            backwardsCompatibility: false,
+            systemOverlayStyle:
+                SystemUiOverlayStyle(statusBarColor: Color(0xFF151C26)),
+            backgroundColor: Color(0xFF151C26),
+            brightness: Brightness.dark,
+            title: Row(
+              children: [
+                Container(
+                  child: Text(
+                    "Movie",
+                    style: TextStyle(color: Colors.white, fontSize: 30),
+                  ),
+                ),
+                Container(
+                  child: Text("HD",
                       style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold))),
-              Container(
-                  child: Column(
-                children: <Widget>[
-                  CarouselSlider(
-                    options: CarouselOptions(
-                      autoPlay: true,
-                      aspectRatio: 2.0,
-                      enlargeCenterPage: true,
-                    ),
-                    items: imgList
-                        .map((item) => Container(
-                              child: InkWell(
-                                child: Container(
-                                  margin: EdgeInsets.all(5.0),
-                                  child: ClipRRect(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(5.0)),
-                                      child: Stack(
-                                        children: <Widget>[
-                                          Image.network(item,
-                                              fit: BoxFit.cover, width: 1000.0),
-                                          Positioned(
-                                            bottom: 0.0,
-                                            left: 0.0,
-                                            right: 0.0,
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                gradient: LinearGradient(
-                                                  colors: [
-                                                    Color.fromARGB(
-                                                        200, 0, 0, 0),
-                                                    Color.fromARGB(0, 0, 0, 0)
+                          color: Colors.amber[700],
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold)),
+                ),
+              ],
+            ),
+          ),
+          body: Container(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                    padding: EdgeInsets.only(left: 10, top: 10, bottom: 10),
+                    child: Text("Trending",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold))),
+                Container(
+                    child: Column(
+                  children: <Widget>[
+                    CarouselSlider(
+                      options: CarouselOptions(
+                        autoPlay: true,
+                        aspectRatio: 2.0,
+                        enlargeCenterPage: true,
+                      ),
+                      items: imgList
+                          .map((item) => Container(
+                                child: InkWell(
+                                  child: Container(
+                                    margin: EdgeInsets.all(5.0),
+                                    child: ClipRRect(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(5.0)),
+                                        child: Stack(
+                                          children: <Widget>[
+                                            Image.network(item,
+                                                fit: BoxFit.cover,
+                                                width: 1000.0),
+                                            Positioned(
+                                              bottom: 0.0,
+                                              left: 0.0,
+                                              right: 0.0,
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  gradient: LinearGradient(
+                                                    colors: [
+                                                      Color.fromARGB(
+                                                          200, 0, 0, 0),
+                                                      Color.fromARGB(0, 0, 0, 0)
+                                                    ],
+                                                    begin:
+                                                        Alignment.bottomCenter,
+                                                    end: Alignment.topCenter,
+                                                  ),
+                                                ),
+                                                padding: EdgeInsets.symmetric(
+                                                    vertical: 10.0,
+                                                    horizontal: 20.0),
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      movies[imgList
+                                                              .indexOf(item)]
+                                                          .title,
+                                                      style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 18.0,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                    ),
+                                                    Row(
+                                                      children: [
+                                                        Icon(
+                                                          Icons.star,
+                                                          color: Colors.amber,
+                                                        ),
+                                                        Text(
+                                                          movies[imgList
+                                                                  .indexOf(
+                                                                      item)]
+                                                              .voteAverage
+                                                              .toString(),
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Colors.white),
+                                                        ),
+                                                      ],
+                                                    ),
                                                   ],
-                                                  begin: Alignment.bottomCenter,
-                                                  end: Alignment.topCenter,
                                                 ),
                                               ),
-                                              padding: EdgeInsets.symmetric(
-                                                  vertical: 10.0,
-                                                  horizontal: 20.0),
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    movies[imgList
-                                                            .indexOf(item)]
-                                                        .title,
-                                                    style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 18.0,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                    ),
-                                                  ),
-                                                  Row(
-                                                    children: [
-                                                      Icon(
-                                                        Icons.star,
-                                                        color: Colors.amber,
-                                                      ),
-                                                      Text(
-                                                        movies[imgList
-                                                                .indexOf(item)]
-                                                            .voteAverage
-                                                            .toString(),
-                                                        style: TextStyle(
-                                                            color:
-                                                                Colors.white),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ],
-                                              ),
                                             ),
-                                          ),
-                                        ],
-                                      )),
+                                          ],
+                                        )),
+                                  ),
+                                  onTap: () {
+                                    MaterialPageRoute route = MaterialPageRoute(
+                                        builder: (_) => MovieDetail(
+                                            movies[imgList.indexOf(item)]));
+                                    Navigator.push(context, route);
+                                  },
                                 ),
-                                onTap: () {
-                                  MaterialPageRoute route = MaterialPageRoute(
-                                      builder: (_) => MovieDetail(
-                                          movies[imgList.indexOf(item)]));
-                                  Navigator.push(context, route);
-                                },
-                              ),
-                            ))
-                        .toList(),
-                  ),
-                ],
-              )),
-              TabBar(
-                indicatorColor: Colors.amber[700],
-                unselectedLabelColor: Colors.white,
-                labelColor: Colors.amber[700],
-                tabs: [
-                  new Container(
-                    child: new Tab(text: 'Popular'),
-                  ),
-                  new Container(
-                    child: new Tab(text: 'Top Rated'),
-                  ),
-                  new Container(
-                    child: new Tab(text: 'Upcoming'),
-                  ),
-                ],
-              ),
-              Expanded(
-                child: TabBarView(
-                  children: [
-                    // first tab bar view widget
-                    Popular(movies, moviesCount),
-
-                    // second tab bar viiew widget
-                    TopRated(topMovies, topCount),
-                    Upcoming(upcomingMovies, upcomingCount),
+                              ))
+                          .toList(),
+                    ),
+                  ],
+                )),
+                TabBar(
+                  indicatorColor: Colors.amber[700],
+                  unselectedLabelColor: Colors.white,
+                  labelColor: Colors.amber[700],
+                  tabs: [
+                    new Container(
+                      child: new Tab(text: 'Popular'),
+                    ),
+                    new Container(
+                      child: new Tab(text: 'Top Rated'),
+                    ),
+                    new Container(
+                      child: new Tab(text: 'Upcoming'),
+                    ),
                   ],
                 ),
-              ),
-            ],
+                Expanded(
+                  child: TabBarView(
+                    children: [
+                      // first tab bar view widget
+                      Popular(movies, moviesCount),
+
+                      // second tab bar viiew widget
+                      TopRated(topMovies, topCount),
+                      Upcoming(upcomingMovies, upcomingCount),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
