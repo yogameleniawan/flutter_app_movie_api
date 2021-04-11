@@ -183,7 +183,7 @@ class _MovieListState extends State<MovieList> {
                 labelColor: Colors.amber[700],
                 tabs: [
                   new Container(
-                    child: new Tab(text: 'hello'),
+                    child: new Tab(text: 'Popular'),
                   ),
                   new Container(
                     child: new Tab(text: 'world'),
@@ -253,12 +253,24 @@ class Popular extends StatelessWidget {
                         width: 100,
                       ),
                       Container(
-                        margin: EdgeInsets.only(left: 120, top: 20),
-                        child: Text(movies[position].title,
+                        margin: EdgeInsets.only(left: 120, top: 10),
+                        child: Text(
+                            movies[position].title +
+                                "\n" +
+                                "(" +
+                                movies[position].releaseDate.substring(0, 4) +
+                                ")",
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: Colors.white,
                                 fontSize: 16)),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(left: 120, top: 70),
+                        child: Text(
+                            movies[position].overview.substring(0, 80) + "...",
+                            style: TextStyle(
+                                color: Colors.amber[700], fontSize: 10)),
                       ),
                       Container(
                         margin: EdgeInsets.only(top: 110, left: 70),
