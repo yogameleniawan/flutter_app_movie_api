@@ -2,6 +2,12 @@
 
 A new Flutter project.
 
+# Home Movie
+![plot](./images/1.png)
+
+# Movie Detail
+![plot](./images/2.png)
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
