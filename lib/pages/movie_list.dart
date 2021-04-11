@@ -44,9 +44,8 @@ class _MovieListState extends State<MovieList> {
 
   @override
   Widget build(BuildContext context) {
-    String imgPath = 'https://image.tmdb.org/t/p/w500/';
     return DefaultTabController(
-      length: 2,
+      length: 3,
       child: Scaffold(
         backgroundColor: Color(0xFF151C26),
         appBar: AppBar(
@@ -178,34 +177,38 @@ class _MovieListState extends State<MovieList> {
                   ),
                 ],
               )),
-              Expanded(
-                child: TabBar(
-                  tabs: [
-                    Tab(
-                      icon: Icon(Icons.directions_bike),
-                    ),
-                    Tab(
-                      icon: Icon(
-                        Icons.directions_car,
-                      ),
-                    ),
-                  ],
-                ),
+              TabBar(
+                indicatorColor: Colors.amber[700],
+                unselectedLabelColor: Colors.white,
+                labelColor: Colors.amber[700],
+                tabs: [
+                  new Container(
+                    child: new Tab(text: 'hello'),
+                  ),
+                  new Container(
+                    child: new Tab(text: 'world'),
+                  ),
+                  new Container(
+                    child: new Tab(text: 'world'),
+                  ),
+                ],
               ),
               Expanded(
                 child: TabBarView(
                   children: [
                     // first tab bar view widget
+                    Popular(movies, moviesCount),
+
+                    // second tab bar viiew widget
                     Container(
-                      color: Colors.red,
+                      color: Colors.pink,
                       child: Center(
                         child: Text(
-                          'Bike',
+                          'Car',
                         ),
                       ),
                     ),
 
-                    // second tab bar viiew widget
                     Container(
                       color: Colors.pink,
                       child: Center(
@@ -217,82 +220,85 @@ class _MovieListState extends State<MovieList> {
                   ],
                 ),
               ),
-              Expanded(
-                child: ListView.builder(
-                    itemCount:
-                        (this.moviesCount == null) ? 0 : this.moviesCount,
-                    itemBuilder: (context, int position) {
-                      return Card(
-                        elevation: 0.0,
-                        color: Color(0xFF151C26),
-                        child: InkWell(
-                          child: Container(
-                            margin: EdgeInsets.only(
-                                bottom: 10, left: 10, right: 10),
-                            child: Stack(
-                              children: [
-                                Image.network(
-                                  imgPath + movies[position].posterPath,
-                                  width: 100,
-                                ),
-                                Container(
-                                  margin: EdgeInsets.only(left: 120, top: 20),
-                                  child: Text(movies[position].title,
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white,
-                                          fontSize: 16)),
-                                ),
-                                Container(
-                                  margin: EdgeInsets.only(top: 110, left: 70),
-                                  child: IntrinsicWidth(
-                                    child: Column(
-                                      children: [
-                                        Container(
-                                          padding: EdgeInsets.only(
-                                              bottom: 10,
-                                              top: 10,
-                                              left: 10,
-                                              right: 10),
-                                          color: Colors.amber[700],
-                                          height: 40,
-                                          width: 70,
-                                          child: Row(
-                                            children: [
-                                              Icon(
-                                                Icons.star,
-                                                color: Colors.black,
-                                              ),
-                                              Text(
-                                                  movies[position]
-                                                      .voteAverage
-                                                      .toString(),
-                                                  style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.bold)),
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          onTap: () {
-                            MaterialPageRoute route = MaterialPageRoute(
-                                builder: (_) => MovieDetail(movies[position]));
-                            Navigator.push(context, route);
-                          },
-                        ),
-                      );
-                    }),
-              ),
             ],
           ),
         ),
       ),
+    );
+  }
+}
+
+class Popular extends StatelessWidget {
+  int moviesCount;
+  List movies;
+  Popular(this.movies, this.moviesCount);
+  String imgPath = 'https://image.tmdb.org/t/p/w500/';
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: ListView.builder(
+          itemCount: (this.moviesCount == null) ? 0 : this.moviesCount,
+          itemBuilder: (context, int position) {
+            return Card(
+              elevation: 0.0,
+              color: Color(0xFF151C26),
+              child: InkWell(
+                child: Container(
+                  margin: EdgeInsets.only(bottom: 10, left: 10, right: 10),
+                  child: Stack(
+                    children: [
+                      Image.network(
+                        imgPath + movies[position].posterPath,
+                        width: 100,
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(left: 120, top: 20),
+                        child: Text(movies[position].title,
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                                fontSize: 16)),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(top: 110, left: 70),
+                        child: IntrinsicWidth(
+                          child: Column(
+                            children: [
+                              Container(
+                                padding: EdgeInsets.only(
+                                    bottom: 10, top: 10, left: 10, right: 10),
+                                color: Colors.amber[700],
+                                height: 40,
+                                width: 70,
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      Icons.star,
+                                      color: Colors.black,
+                                    ),
+                                    Text(
+                                        movies[position].voteAverage.toString(),
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold)),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                onTap: () {
+                  MaterialPageRoute route = MaterialPageRoute(
+                      builder: (_) => MovieDetail(movies[position]));
+                  Navigator.push(context, route);
+                },
+              ),
+            );
+          }),
     );
   }
 }
