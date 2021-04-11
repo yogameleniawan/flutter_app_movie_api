@@ -15,19 +15,29 @@ class MovieList extends StatefulWidget {
 class _MovieListState extends State<MovieList> {
   int moviesCount;
   List movies;
+  List topMovies;
+  int topCount;
+  List upcomingMovies;
+  int upcomingCount;
   HttpService service;
   String imgPath = 'https://image.tmdb.org/t/p/w500/';
 
-  var listCategory = ["Popular Movies", "Work", "Shopping", "Home"];
-  String _newValue = "No Category";
   List<String> imgList = [];
 
   Future initialize() async {
     movies = [];
     movies = await service.getPopularMovies();
+    topMovies = [];
+    topMovies = await service.getTopMovies();
+    upcomingMovies = [];
+    upcomingMovies = await service.getUpcomingMovies();
     setState(() {
       moviesCount = movies.length;
+      topCount = topMovies.length;
+      upcomingCount = upcomingMovies.length;
       movies = movies;
+      topMovies = topMovies;
+      upcomingMovies = upcomingMovies;
       for (int i = 0; i < 3; i++) {
         String image = imgPath + movies[i].posterPath;
         imgList.add(image);
@@ -186,10 +196,10 @@ class _MovieListState extends State<MovieList> {
                     child: new Tab(text: 'Popular'),
                   ),
                   new Container(
-                    child: new Tab(text: 'world'),
+                    child: new Tab(text: 'Top Rated'),
                   ),
                   new Container(
-                    child: new Tab(text: 'world'),
+                    child: new Tab(text: 'Upcoming'),
                   ),
                 ],
               ),
@@ -200,23 +210,8 @@ class _MovieListState extends State<MovieList> {
                     Popular(movies, moviesCount),
 
                     // second tab bar viiew widget
-                    Container(
-                      color: Colors.pink,
-                      child: Center(
-                        child: Text(
-                          'Car',
-                        ),
-                      ),
-                    ),
-
-                    Container(
-                      color: Colors.pink,
-                      child: Center(
-                        child: Text(
-                          'Car',
-                        ),
-                      ),
-                    ),
+                    TopRated(topMovies, topCount),
+                    Upcoming(upcomingMovies, upcomingCount),
                   ],
                 ),
               ),
@@ -245,7 +240,7 @@ class Popular extends StatelessWidget {
               color: Color(0xFF151C26),
               child: InkWell(
                 child: Container(
-                  margin: EdgeInsets.only(bottom: 10, left: 10, right: 10),
+                  margin: EdgeInsets.all(10.0),
                   child: Stack(
                     children: [
                       Image.network(
@@ -306,6 +301,190 @@ class Popular extends StatelessWidget {
                 onTap: () {
                   MaterialPageRoute route = MaterialPageRoute(
                       builder: (_) => MovieDetail(movies[position]));
+                  Navigator.push(context, route);
+                },
+              ),
+            );
+          }),
+    );
+  }
+}
+
+class TopRated extends StatelessWidget {
+  List topMovies;
+  int topCount;
+  TopRated(this.topMovies, this.topCount);
+  String imgPath = 'https://image.tmdb.org/t/p/w500/';
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: ListView.builder(
+          itemCount: (this.topCount == null) ? 0 : this.topCount,
+          itemBuilder: (context, int position) {
+            return Card(
+              elevation: 0.0,
+              color: Color(0xFF151C26),
+              child: InkWell(
+                child: Container(
+                  margin: EdgeInsets.all(10.0),
+                  child: Stack(
+                    children: [
+                      Image.network(
+                        imgPath + topMovies[position].posterPath,
+                        width: 100,
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(left: 120, top: 10),
+                        child: Text(
+                            topMovies[position].title +
+                                "\n" +
+                                "(" +
+                                topMovies[position]
+                                    .releaseDate
+                                    .substring(0, 4) +
+                                ")",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                                fontSize: 16)),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(left: 120, top: 70),
+                        child: Text(
+                            topMovies[position].overview.substring(0, 80) +
+                                "...",
+                            style: TextStyle(
+                                color: Colors.amber[700], fontSize: 10)),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(top: 110, left: 70),
+                        child: IntrinsicWidth(
+                          child: Column(
+                            children: [
+                              Container(
+                                padding: EdgeInsets.only(
+                                    bottom: 10, top: 10, left: 10, right: 10),
+                                color: Colors.amber[700],
+                                height: 40,
+                                width: 70,
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      Icons.star,
+                                      color: Colors.black,
+                                    ),
+                                    Text(
+                                        topMovies[position]
+                                            .voteAverage
+                                            .toString(),
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold)),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                onTap: () {
+                  MaterialPageRoute route = MaterialPageRoute(
+                      builder: (_) => MovieDetail(topMovies[position]));
+                  Navigator.push(context, route);
+                },
+              ),
+            );
+          }),
+    );
+  }
+}
+
+class Upcoming extends StatelessWidget {
+  List upcomingMovies;
+  int upcomingCount;
+  Upcoming(this.upcomingMovies, this.upcomingCount);
+  String imgPath = 'https://image.tmdb.org/t/p/w500/';
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: ListView.builder(
+          itemCount: (this.upcomingCount == null) ? 0 : this.upcomingCount,
+          itemBuilder: (context, int position) {
+            return Card(
+              elevation: 0.0,
+              color: Color(0xFF151C26),
+              child: InkWell(
+                child: Container(
+                  margin: EdgeInsets.all(10.0),
+                  child: Stack(
+                    children: [
+                      Image.network(
+                        imgPath + upcomingMovies[position].posterPath,
+                        width: 100,
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(left: 120, top: 10),
+                        child: Text(
+                            upcomingMovies[position].title +
+                                "\n" +
+                                "(" +
+                                upcomingMovies[position]
+                                    .releaseDate
+                                    .substring(0, 4) +
+                                ")",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                                fontSize: 16)),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(left: 120, top: 70),
+                        child: Text(
+                            upcomingMovies[position].overview.substring(0, 80) +
+                                "...",
+                            style: TextStyle(
+                                color: Colors.amber[700], fontSize: 10)),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(top: 110, left: 70),
+                        child: IntrinsicWidth(
+                          child: Column(
+                            children: [
+                              Container(
+                                padding: EdgeInsets.only(
+                                    bottom: 10, top: 10, left: 10, right: 10),
+                                color: Colors.amber[700],
+                                height: 40,
+                                width: 70,
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      Icons.star,
+                                      color: Colors.black,
+                                    ),
+                                    Text(
+                                        upcomingMovies[position]
+                                            .voteAverage
+                                            .toString(),
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold)),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                onTap: () {
+                  MaterialPageRoute route = MaterialPageRoute(
+                      builder: (_) => MovieDetail(upcomingMovies[position]));
                   Navigator.push(context, route);
                 },
               ),
