@@ -3,10 +3,10 @@
 A new Flutter project.
 
 # Home Movie
-![plot](.lib/images/1.png)
+![plot](./images/1.png)
 
 # Movie Detail
-![plot](.lib/images/2.png)
+![plot](./images/2.png)
 
 ## Getting Started
 
