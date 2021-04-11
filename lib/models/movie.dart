@@ -6,9 +6,10 @@ class Movie {
   String posterPath;
   String releaseDate;
   int voteCount;
+  String backdropPath;
 
   Movie(this.id, this.title, this.voteAverage, this.overview, this.posterPath,
-      this.releaseDate, this.voteCount);
+      this.releaseDate, this.voteCount, this.backdropPath);
 
   Movie.fromJson(Map<String, dynamic> parsedJson) {
     this.id = parsedJson['id'];
@@ -18,5 +19,6 @@ class Movie {
     this.posterPath = parsedJson['poster_path'];
     this.releaseDate = parsedJson['release_date'];
     this.voteCount = parsedJson['vote_count'];
+    this.backdropPath = parsedJson['backdrop_path'];
   }
 }

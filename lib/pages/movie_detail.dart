@@ -10,8 +10,10 @@ class MovieDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String path;
+    String backdrop;
     if (movie.posterPath != null) {
       path = imgPath + movie.posterPath;
+      backdrop = imgPath + movie.backdropPath;
     } else {
       path =
           'https://images.freeimages.com/images/large-previews/5eb/movie-clapboard-1184339.jpg';
@@ -52,7 +54,7 @@ class MovieDetail extends StatelessWidget {
                     height: height / 2.2,
                     child: Image.network(path)),
                 Container(
-                  margin: EdgeInsets.only(top: 10, left: 117),
+                  margin: EdgeInsets.only(top: 10, left: 118),
                   child: IntrinsicWidth(
                     child: Column(
                       children: [
@@ -189,9 +191,31 @@ class MovieDetail extends StatelessWidget {
             ),
             Container(
               padding: EdgeInsets.only(left: 40, top: 10),
-              child: Text(movie.overview,
+              child: Text(
+                  "\t\t\t\t\t\t" +
+                      movie.overview +
+                      "\n" +
+                      "\t\t\t\t\t\t" +
+                      movie.overview +
+                      "\n" +
+                      "\t\t\t\t\t\t" +
+                      movie.overview,
                   style: TextStyle(fontSize: 12, color: Colors.white)),
             ),
+            Container(
+              padding: EdgeInsets.only(left: 40, top: 10),
+              child: Text(
+                "Backdrop",
+                style: TextStyle(
+                    fontSize: 25,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold),
+              ),
+            ),
+            Container(
+                padding:
+                    EdgeInsets.only(left: 40, top: 5, right: 10, bottom: 10),
+                child: Image.network(backdrop)),
           ],
         ),
       )),
